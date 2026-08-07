@@ -1,7 +1,7 @@
 "use client"
 import { LogOut, Plus } from "lucide-react"
 import { useState } from "react"
-import { NewConcursoModal } from "../features/new-concurso/NewConcursoModal"
+import { NewConcursoModal } from "../features/concurso/NewConcursoModal"
 import { useRouter } from "next/navigation"
 import { useAuth } from "../features/auth/useAuth"
 
@@ -53,7 +53,7 @@ export const Sidebar = () => {
             </nav>
 
 
-            {openModalCreateConcurso && <NewConcursoModal />}
+            {openModalCreateConcurso && <NewConcursoModal toggleModal={toggleModalCreateConcurso} />}
         </>
 
     )
