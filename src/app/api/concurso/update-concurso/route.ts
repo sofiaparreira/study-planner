@@ -3,7 +3,7 @@ import { prisma } from "@/src/lib/prisma";
 import { createConcursoSchema } from "@/src/schemas/concurso.shema";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
         const user = getAuthenticatedUser(request)
         if (!user) {
@@ -12,9 +12,10 @@ export async function POST(request: Request) {
                 { status: 401 }
             )
         }
-
-        const body = await request.json();
-        const result = createConcursoSchema.safeParse(body)
+        
+        const { id } = await params;
+        const body = request.json();
+        const result = createConcursoSchema.safeParse(body);
 
         if (!result.success) {
             return NextResponse.json(
@@ -23,20 +24,28 @@ export async function POST(request: Request) {
             )
         }
 
-        const concurso = await prisma.concurso.create({
-            data: {
-                ...result.data,
-                userId: user.id
-            }
+        const concurso = prisma.concurso.findUnique({ where: { id } })
+        if (!concurso) {
+            return NextResponse.json(
+                { error: "Concurso não encontrado" },
+                { status: 404 }
+            )
+        }
+
+        await prisma.concurso.update({
+            where: { id },
+            data: { body }
         })
 
         return NextResponse.json(
             concurso,
-            { status: 201 }
+            { status: 200 }
         )
 
     } catch (error) {
-        console.error("ERRO AO CRIAR CONCURSO:", error);
-        return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
+        return NextResponse.json(
+            { error: "Erro no servidor" },
+            { status: 500 }
+        );
     }
 }

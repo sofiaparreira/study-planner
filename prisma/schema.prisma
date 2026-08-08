@@ -21,6 +21,8 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  concursos Concurso[]
 }
 
 model Concurso {
@@ -28,6 +30,9 @@ model Concurso {
   name String
   examining_board String?
   date DateTime
+
+  userId String
+  user User @relation(fields: [userId], references: [id])
   subjects Subject[]
 }
 

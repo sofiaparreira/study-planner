@@ -4,19 +4,19 @@ import { useState } from "react"
 import { NewConcursoModal } from "../features/concurso/NewConcursoModal"
 import { useRouter } from "next/navigation"
 import { useAuth } from "../features/auth/useAuth"
+import useConcurso from "../features/concurso/useConcurso"
 
 
 export const Sidebar = () => {
-
-    const concursos = [
-        { name: 'Concurso 01', id: 1 },
-        { name: 'Concurso 02', id: 2 },
-    ]
 
     const [openModalCreateConcurso, setOpenModalCreateConcurso] = useState<boolean>(false);
     const router = useRouter();
     const toggleModalCreateConcurso = () => setOpenModalCreateConcurso(!openModalCreateConcurso)
     const { logout } = useAuth();
+
+    const {
+        concursoList
+    } = useConcurso()
 
     return (
         <>
@@ -30,7 +30,7 @@ export const Sidebar = () => {
                         </button>
                     </div>
                     <ul>
-                        {concursos.map((concurso) => (
+                        {concursoList.map((concurso) => (
                             <li key={concurso.id} className='py-2 px-2 cursor-pointer text-gray-700 hover:bg-gray-100 rounded-lg'>{concurso.name}</li>
                         ))
                         }
