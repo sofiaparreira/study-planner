@@ -1,5 +1,5 @@
 "use client"
-import { IUser } from "@/src/types/auth";
+import { ISession, IUser } from "@/src/types/auth";
 import { useEffect, useState } from "react";
 import { createContext } from "react";
 import { logoutService, meService } from "./auth.service";
@@ -17,7 +17,7 @@ export const AuthContext = createContext<AuthContextType | null>(null)
 export function AuthProvider({children}: {children: React.ReactNode}) {
     const [user, setUser] = useState<IUser | null>(null)
     const [authenticated, setAuthenticated] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(true)
     const router = useRouter();
 
     useEffect(() => {
@@ -25,6 +25,8 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
             try {
                 setLoading(true)
                 const data = await meService();
+                console.log('teste2', data)
+                console.log
                 setAuthenticated(data.authenticated)
                 setUser(data.user)
                    
@@ -37,6 +39,7 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
         checkAuth();
     },[])
 
+    console.log('usuario', user)
     const handleLogout = async () => {
         try {
             setLoading(true)

@@ -12,7 +12,7 @@ export const Sidebar = () => {
     const [openModalCreateConcurso, setOpenModalCreateConcurso] = useState<boolean>(false);
     const router = useRouter();
     const toggleModalCreateConcurso = () => setOpenModalCreateConcurso(!openModalCreateConcurso)
-    const { logout } = useAuth();
+    const { logout, user } = useAuth();
 
     const {
         concursoList
@@ -41,8 +41,8 @@ export const Sidebar = () => {
                         <span className='flex gap-2 items-center'>
                             <div className="w-9 h-9 flex items-center justify-center bg-emerald-600 text-white font-semibold rounded-full">SP</div>
                             <span>
-                                <p className='text-gray-800 font-medium first-letter:uppercase'>usuário</p>
-                                <p className='text-xs text-gray-600 max-w-34 truncate'>sofiapparreira@gmail.com</p>
+                                <p className='text-gray-800 font-medium first-letter:uppercase'>{user?.name}</p>
+                                <p className='text-xs text-gray-600 max-w-34 truncate'>{user?.email}</p>
                             </span>
                         </span>
                         <button onClick={logout} className='text-gray-500 hover:text-red-600 rounded-full h-10 w-10 flex justify-center items-center rounded-full hover:bg-red-50 cursor-pointer duration-300'>
