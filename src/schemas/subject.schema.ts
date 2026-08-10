@@ -7,12 +7,12 @@ export const createSubjectSchema = z.object({
         .min(3, "O campo 'Nome da disciplina' deve ter pelo menos 3 caracteres")
         .max(60, "O campo 'Nome da disciplina' deve ter até 60 caracteres"),
 
-    quantityQuestions: z
+    quantity_questions: z
         .number()
         .int("O campo 'Quantidade de questões' deve ser um número inteiro")
         .min(1, "O campo 'Quantidade de questões' deve ser pelo menos 1")
         .max(300, "O campo 'Quantidade de questões' deve ser até 300"),
-    pointsPerQuestion: z
+    points_per_questions: z
         .number()
         .positive("O campo 'Pontos de questão' deve ser maior que 0")
         .max(20, "O cmapo 'Pontos por questão' deve ser no máximo 20")

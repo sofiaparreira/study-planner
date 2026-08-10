@@ -40,8 +40,8 @@ model Subject {
   id String @id @default(cuid())
   name String
   concursoId String
-  quantityQuestions Int?
-  pointsPerQuestion Int?
+  quantity_questions Int?
+  points_per_questions Int?
   topics Topic[]
 
   concurso Concurso @relation(fields: [concursoId], references: [id])

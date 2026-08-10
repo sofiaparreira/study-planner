@@ -34,6 +34,8 @@ export default function useConcursoById() {
   useEffect(() => {
     getConcursoById();
   }, [getConcursoById]);
+
+
   return {
     loading,
     concurso,
