@@ -22,3 +22,11 @@ export async function createConcursoService(body: ConcursoDTO) {
     }
     return data;
 }
+
+
+export async function getConcursoByIdService(id: string) {
+    const response = await fetch(`/api/concurso/getById-concurso/${id}`);
+    const data = await response.json();
+    if(!response.ok) throw new Error(data.error);
+    return data;
+}

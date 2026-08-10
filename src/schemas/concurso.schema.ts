@@ -3,8 +3,9 @@ import { z } from "zod";
 export const createConcursoSchema = z.object({
     name: z
         .string()
-        .min(1, "Nome é obrigatório")
-        .min(3, "Nome deve ter pelo menos 3 caracteres"),
+        .min(1, "O campo 'Nome do concurso' é obrigatório")
+        .min(3, "O campo 'Nome do concurso' deve ter pelo menos 3 caracteres")
+        .max(40, "O campo 'Nome do concurso' deve ter até 40 caracteres"),
 
     examining_board: z
         .string()

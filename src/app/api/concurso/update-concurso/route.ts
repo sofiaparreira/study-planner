@@ -1,6 +1,6 @@
 import { getAuthenticatedUser } from "@/src/lib/auth";
 import { prisma } from "@/src/lib/prisma";
-import { createConcursoSchema } from "@/src/schemas/concurso.shema";
+import { createConcursoSchema } from "@/src/schemas/concurso.schema";
 import { NextResponse } from "next/server";
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {

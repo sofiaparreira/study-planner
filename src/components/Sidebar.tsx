@@ -5,6 +5,7 @@ import { NewConcursoModal } from "../features/concurso/NewConcursoModal"
 import { useRouter } from "next/navigation"
 import { useAuth } from "../features/auth/useAuth"
 import useConcurso from "../features/concurso/useConcurso"
+import Link from "next/link"
 
 
 export const Sidebar = () => {
@@ -31,7 +32,7 @@ export const Sidebar = () => {
                     </div>
                     <ul>
                         {concursoList.map((concurso) => (
-                            <li key={concurso.id} className='py-2 px-2 cursor-pointer text-gray-700 hover:bg-gray-100 rounded-lg'>{concurso.name}</li>
+                            <Link key={concurso.id} href={`/concurso/${concurso.id}`}> <li className='py-2 px-2 cursor-pointer text-gray-700 hover:bg-gray-100 rounded-lg'>{concurso.name}</li></Link>
                         ))
                         }
                     </ul>
