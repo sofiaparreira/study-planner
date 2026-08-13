@@ -1,21 +1,26 @@
 import { ButtonDefault } from "@/src/components/ButtonDefault";
 import { InputDefault } from "@/src/components/InputDefault";
 import { CloseButton } from "@/src/components/CloseButton";
-import { SubjectDTO } from "@/src/types/subject";
+import { SubjectDTO, TopicDTO } from "@/src/types/subject";
+import { Plus, PlusIcon } from "lucide-react";
 
 interface NewSubjectModelProps {
     toggleSubjectModal: () => void;
     createSubject: () => void;
     handleChangeSubject: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    subject: SubjectDTO
+    handleChangeTopic: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    addTopic: (name: string) => void;
+    subject: SubjectDTO;
+    topic: TopicDTO;
+    topicList: TopicDTO[]
 }
 
-export function NewSubjectModal({toggleSubjectModal, createSubject, handleChangeSubject, subject} : NewSubjectModelProps) {
+export function NewSubjectModal({toggleSubjectModal, createSubject, handleChangeSubject, handleChangeTopic, subject, topic, addTopic, topicList} : NewSubjectModelProps) {
 
   
     return (
         <div onClick={toggleSubjectModal} className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px]">
-            <main onClick={(e) => e.stopPropagation()} className="flex flex-col items-center w-full max-w-xl rounded-4xl bg-white p-8 shadow-xl">
+            <main onClick={(e) => e.stopPropagation()} className="flex flex-col items-center w-full max-w-4xl rounded-4xl bg-white p-8 shadow-xl">
                 <div className='w-full flex items-center justify-end'>
                     <CloseButton aria-label="Fechar Modal" onClick={toggleSubjectModal} />
                 </div>
@@ -56,6 +61,26 @@ export function NewSubjectModal({toggleSubjectModal, createSubject, handleChange
                             onChange={handleChangeSubject}
                             value={subject.points_per_questions}
                         />
+                    </div>
+
+                    <div>
+                        <label className='font-medium text-gray-800 block mb-1' htmlFor="">Sub-disciplinas</label>
+                        <div className="flex gap-3 items-center justify-center">
+                            <InputDefault
+                                name="name"
+                                isRequired={true}
+                                onChange={handleChangeTopic}
+                                value={topic.name}
+                            />
+                            <button type='button' onClick={() => addTopic(topic.name)} className="bg-emerald-600 text-white p-2 rounded-full flex items-center justify-center"><PlusIcon /></button>
+                        </div>
+
+                        <div className="flex mt-3">
+                            {topicList.map((topic, index) => (
+                            <span key={index} className='bg-emerald-50 text-emerald-700 rounded-full py-1 px-3'>{topic.name}</span>
+                            ))}
+                        </div>
+
                     </div>
 
                     <ButtonDefault type="submit" wFull={true}>

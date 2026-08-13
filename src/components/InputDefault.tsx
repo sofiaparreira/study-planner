@@ -3,7 +3,7 @@ import type { LucideIcon } from 'lucide-react';
 import { useId } from "react";
 
 interface InputDefaultProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'suffix'> {
-    label: string;
+    label?: string;
     prefix?: LucideIcon;
     suffix?: LucideIcon;
     error?: string;
@@ -27,8 +27,8 @@ export const InputDefault = ({
 
     return (
         <div className='w-full'>
-            <label htmlFor={id} className='font-medium text-gray-800 block mb-1'>{label} {isRequired && <span className='text-red-500'>*</span>}</label>
-            <div className={`mb-2 bg-white flex items-center gap-2 rounded-xl border ${error ? 'border-red-600' : 'border-gray-200'} px-3 h-11 focus-within:outline focus-within:outline-emerald-300`}>
+            {label && <label htmlFor={id} className='font-medium text-gray-800 block mb-1'>{label} {isRequired && <span className='text-red-500'>*</span>}</label>}
+            <div className={` bg-white flex items-center gap-2 rounded-xl border ${error ? 'border-red-600' : 'border-gray-200'} px-3 h-11 focus-within:outline focus-within:outline-emerald-300`}>
                 {Prefix && <Prefix aria-hidden="true" className="h-5 w-5 shrink-0 text-icon" />}
                 <input
                     id={id}
@@ -40,8 +40,8 @@ export const InputDefault = ({
                 />
                 {Suffix && <Suffix aria-hidden="true" className="h-5 w-5 shrink-0 text-gray-700" />}
             </div>
-            {helperText && <span className='text-sm text-muted'>{helperText}</span>}
-            {error && <span className='text-sm text-error'>{error}</span>}
+            {helperText && <span className='mt-2 text-sm text-muted'>{helperText}</span>}
+            {error && <span className='mt-2 text-sm text-error'>{error}</span>}
         </div>
     )
 }

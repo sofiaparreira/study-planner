@@ -19,5 +19,11 @@ export const createSubjectSchema = z.object({
         .refine(
             (value) => Number.isInteger(value * 100),
             "O campo 'Pontos por questão', deve ter no máximo 2 casas decimais"
-        )
+        ),
+
+     topics: z.array(
+    z.object({
+      name: z.string().min(1, "O nome do tópico é obrigatório"),
+    })
+  ).default([]),
 })

@@ -45,7 +45,7 @@ export async function logoutService() {
 }
 
 export async function meService() {
-    const response = await fetch("api/auth/me", {
+    const response = await fetch("/api/auth/me", {
         method: "GET"
     })
     const data = await response.json()

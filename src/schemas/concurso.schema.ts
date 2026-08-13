@@ -11,6 +11,12 @@ export const createConcursoSchema = z.object({
         .string()
         .optional(),
 
+    weekly_hours: z
+        .number()
+        .int("O campo 'Horas semanais' deve ser um número inteiro")
+        .min(1, "O campo 'Horas semanais' deve ser pelo menos 1")
+        .max(70, "O campo 'Horas semanais' deve ser até 70"),
+
     date: z.preprocess(
         (value) => {
             if (typeof value === "string") {

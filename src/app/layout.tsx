@@ -22,7 +22,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <AuthProvider>
           <div className="flex">
             <Sidebar />
-            <main className="bg-gray-50 w-full p-8">{children}</main>
+            <main className="bg-gray-50 ml-56 w-full p-8">{children}</main>
           </div>
 
           <Toaster />

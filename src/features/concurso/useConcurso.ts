@@ -12,15 +12,16 @@ export default function useConcurso() {
     name: "",
     date: "",
     examining_board: "",
+    weekly_hours: 0
   });
 
   const [concursoList, setConcursoList] = useState<IConcurso[]>([]);
 
   const handleChangeConcurso = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    const { name, value, type } = event.target;
     setConcursoRequest((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === "number" ? Number(value) : value,
     }));
   };
 
@@ -49,10 +50,11 @@ export default function useConcurso() {
   const createConcurso = async () => {
     try {
       setLoading(true);
-      const newConcurso = await createConcursoService({
+      await createConcursoService({
         name: concursoRequest.name,
         date: concursoRequest.date,
         examining_board: concursoRequest.examining_board,
+        weekly_hours: concursoRequest.weekly_hours
       });
       await getAllConcurso();
       toast.success("Concurso criado com sucesso");

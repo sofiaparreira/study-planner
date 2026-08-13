@@ -58,6 +58,14 @@ export function NewConcursoModal({ toggleModal }: NewConcursoModalProps) {
                         onChange={handleChangeConcurso}
                         value={concursoRequest.date}
                     />
+                    <InputDefault 
+                        label="Horas semanais" 
+                        name="weekly_hours" 
+                        type="number" 
+                        isRequired={true}
+                        onChange={handleChangeConcurso}
+                        value={concursoRequest.weekly_hours}
+                    />
                     
                     <ButtonDefault type="submit" wFull={true}>
                         Criar

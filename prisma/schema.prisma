@@ -12,11 +12,10 @@ datasource db {
   provider = "postgresql"
 }
 
-
 model User {
-  id String @id @default(cuid())
-  name String
-  email String @unique
+  id       String @id @default(cuid())
+  name     String
+  email    String @unique
   password String
 
   createdAt DateTime @default(now())
@@ -26,31 +25,88 @@ model User {
 }
 
 model Concurso {
-  id String @id @default(cuid())
-  name String
+  id              String   @id @default(cuid())
+  name            String
   examining_board String?
-  date DateTime
+  weekly_hours    Int
+  date            DateTime
 
-  userId String
-  user User @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId   String
+  planner  Planner?
   subjects Subject[]
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Subject {
-  id String @id @default(cuid())
-  name String
-  concursoId String
-  quantity_questions Int?
-  points_per_questions Int?
-  topics Topic[]
+  id                   String @id @default(cuid())
+  name                 String
+  concursoId           String
+  quantity_questions   Int
+  points_per_questions Int
+
+  topics       Topic[]
+  plannerItems PlannerItem[]
 
   concurso Concurso @relation(fields: [concursoId], references: [id])
 }
 
 model Topic {
-  id String @id @default(cuid())
-  name String
+  id        String @id @default(cuid())
+  name      String
   subjectId String
 
+  plannerItems PlannerItem[]
+
   subject Subject @relation(fields: [subjectId], references: [id])
+}
+
+model Planner {
+  id         String @id @default(cuid())
+  concursoId String @unique
+
+  startDate DateTime
+  endDate   DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  concurso Concurso      @relation(fields: [concursoId], references: [id], onDelete: Cascade)
+  weeks    PlannerWeek[]
+}
+
+model PlannerWeek {
+  id        String        @id @default(cuid())
+  plannerId String
+  startDate DateTime
+  endDate   DateTime
+  createdAt DateTime      @default(now())
+  items     PlannerItem[]
+
+  planner Planner @relation(fields: [plannerId], references: [id], onDelete: Cascade)
+
+  @@index([plannerId])
+}
+
+model PlannerItem {
+  id            String @id @default(cuid())
+  plannerWeekId String
+  subjectId     String
+  topicId       String
+
+  durationMinutes Int
+  completed       Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  plannerWeek PlannerWeek @relation(fields: [plannerWeekId], references: [id], onDelete: Cascade)
+  subject     Subject     @relation(fields: [subjectId], references: [id])
+  topic       Topic       @relation(fields: [topicId], references: [id])
+
+  @@index([plannerWeekId])
+  @@index([subjectId])
+  @@index([topicId])
 }
